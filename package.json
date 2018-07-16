@@ -1,0 +1,25 @@
+{
+  "name": "xlutils",
+  "version": "1.0.0",
+  "description": "High level excel library based on exceljs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Dischain/xlutils.git"
+  },
+  "author": "dischain",
+  "license": "MIT",
+  "keywords": [
+    "excel",
+    "xlsx",
+    "office",
+    "spreadsheet",
+    "workbook"
+  ],
+  "dependencies": {
+    "exceljs": "^1.5.1"
+  }
+}
