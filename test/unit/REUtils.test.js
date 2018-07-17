@@ -1,7 +1,7 @@
 'use strict';
+
 const assert = require('assert'),
-      REUtils = require('../../lib/utils/REUtils'),
-      AddressFormatException = require('../../lib/exceptions/AddressFormatException');
+      REUtils = require('../../lib/utils/REUtils');
 
 describe('REUtils', () => {
   it('should test whether a given string is an Excel address', (done) => {
@@ -10,6 +10,7 @@ describe('REUtils', () => {
     assert.equal(REUtils.isAddress('AZ23'), true); // common address case, big collumn index
     assert.equal(REUtils.isAddress('BT2:AK3'), true); // range address case
     
+    assert.equal(REUtils.isAddress('1Z'), false); // common address case, with typo
     assert.equal(REUtils.isAddress('A,2'), false); // common address case, with typo
     assert.equal(REUtils.isAddress('A'), false); // common address case, without row
     assert.equal(REUtils.isAddress('2'), false); // common address case, with collumn

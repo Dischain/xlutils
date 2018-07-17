@@ -7,8 +7,7 @@ module.exports = {
   "rules": {
       "linebreak-style": [
           "error",
-          "windows",
-          "unix"
+          "windows"
       ],
       "quotes": [
           "error",
@@ -23,11 +22,11 @@ module.exports = {
       "no-undef": "off"
   },
   "plugins": [
-      "react"
+      
   ],
   "parserOptions": {
     "ecmaFeatures": {
-      "jsx": true
+     
     },
     "sourceType": "module",
   }
