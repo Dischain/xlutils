@@ -22,4 +22,11 @@ describe('SringUtils', () => {
     assert.equal(StringUtils.eraseTrailingPeriods('...1.3dsds'), '1.3dsds');
     done();
   });
+
+  it('should construct path by the given parent path and child name', (done) => {
+    assert.equal(StringUtils.constructPath('parent/path/', 'child'), 'parent/path/child/');
+    assert.equal(StringUtils.constructPath(null, 'child'), 'child/');
+    assert.equal(StringUtils.constructPath(undefined, 'child'), 'child/');
+    done();
+  });
 });
