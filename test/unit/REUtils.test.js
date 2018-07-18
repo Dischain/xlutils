@@ -21,6 +21,23 @@ describe('REUtils', () => {
     done();
   });
 
+  it('should test whether a given string is an Excel range address', (done) => {
+    assert.equal(REUtils.isRangeAddress('A2'), false); // common address case
+    assert.equal(REUtils.isRangeAddress('z2'), false); // common address case, lowercase letter
+    assert.equal(REUtils.isRangeAddress('AZ23'), false); // common address case, big collumn index
+    assert.equal(REUtils.isRangeAddress('BT2:AK3'), true); // range address case
+    
+    assert.equal(REUtils.isRangeAddress('1Z'), false); // common address case, with typo
+    assert.equal(REUtils.isRangeAddress('A,2'), false); // common address case, with typo
+    assert.equal(REUtils.isRangeAddress('A'), false); // common address case, without row
+    assert.equal(REUtils.isRangeAddress('2'), false); // common address case, with collumn
+    assert.equal(REUtils.isRangeAddress('BT2: AK3'), false); // range address case, with typo
+    assert.equal(REUtils.isRangeAddress('BT2:AK'), false); // range address case, without row
+    assert.equal(REUtils.isRangeAddress('2:AK3'), false); // range address case, without column
+    assert.equal(REUtils.isRangeAddress('BT:AK'), false); // range address case, without rowss
+    done();
+  });
+
   it('should return the upper bound of range address', (done) => {
     assert.equal(REUtils.getUpperBound('BT2:AK3'), 'AK3');
     done();
