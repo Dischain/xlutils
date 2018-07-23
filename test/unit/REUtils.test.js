@@ -99,4 +99,20 @@ describe('REUtils', () => {
     assert.equal(REUtils.colToIndex('AaC'), 705);
     done();
   });
+
+  it('should return lowest row in range', (done) => {
+    assert.equal(REUtils.getMinRow('A6: A10'), 6);
+    assert.equal(REUtils.getMinRow('A6: E10'), 6);
+    assert.equal(REUtils.getMinRow('A11: A10'), 10);
+    assert.equal(REUtils.getMinRow('E11: A10'), 10);
+    done();
+  });
+
+  it('should return lowest row in range', (done) => {
+    assert.equal(REUtils.getMaxRow('A6: A10'), 10);
+    assert.equal(REUtils.getMaxRow('A6: E10'), 10);
+    assert.equal(REUtils.getMaxRow('A11: A10'), 11);
+    assert.equal(REUtils.getMaxRow('E11: A10'), 11);
+    done();
+  });
 });
