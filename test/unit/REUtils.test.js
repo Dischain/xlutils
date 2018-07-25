@@ -115,4 +115,9 @@ describe('REUtils', () => {
     assert.equal(REUtils.getMaxRow('E11: A10'), 11);
     done();
   });
+
+  it('should fill plain column range with given row', (done) => {
+    assert.equal(REUtils.fillColRangeWithRows('A:PP', 2), 'A2:PP2');
+    done();
+  });
 });
