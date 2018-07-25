@@ -17,6 +17,7 @@ describe('Row', () => {
       const row = new Row('C10', 'D10:I10', ws);
       assert.equal(row.getName(), 'row1');
       assert.equal(row.getAddress(), 'C10');
+      assert.equal(row.getRow(), 10);
       assert.equal(row.getValuesRange().getAddress().toString(), 'D10:I10');
       done();
     });
