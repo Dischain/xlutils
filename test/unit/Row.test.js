@@ -13,7 +13,7 @@ describe('Row', () => {
   const wsPromise = readFile('H:/работа/xlutils/test/row_test.xlsx');
 
   it('should correctly construct row', (done) => {
-    wsPromise.then((ws) => {
+    wsPromise.then(({ ws }) => {
       const row = new Row('C10', 'D10:I10', ws);
       assert.equal(row.getName(), 'row1');
       assert.equal(row.getAddress(), 'C10');
@@ -25,7 +25,7 @@ describe('Row', () => {
 
   it('should get value by column index', (done) => {
     let row;
-    wsPromise.then((ws) => {
+    wsPromise.then(({ ws }) => {
       row = new Row('C10', 'D10:I10', ws);
       return Promise.resolve();
     }).then(() => {
@@ -36,7 +36,7 @@ describe('Row', () => {
 
   it('should set value by column index', (done) => {
     let row;
-    wsPromise.then((ws) => {
+    wsPromise.then(({ ws }) => {
       row = new Row('C10', 'D10:I10', ws);
       return Promise.resolve();
     }).then(() => {

@@ -139,37 +139,31 @@ describe('Field', () => {
     const f1 = 'D6', f2 = 'L6', f3 = 'L12';
 
     it ('should correctly construct field with subfields', (done) => {
-      wsPromise.then((ws) => {
+      wsPromise.then(({ ws }) => {
         const field1 = new Field(f1, null, ws, 3);
         const field2 = new Field(f2, null, ws, 3);
         const field3 = new Field(f3, null, ws, 3);
-        console.log(field1.equals(field3));
-        console.log(field2.equals(field3));
-        console.log(field1.equals(field2));
-        console.log(field2.equals(field1));
-
-        // console.log(Object.keys(field1.getChildren()).length);
-        // console.log(field1.getChild('field2').getName());
-        // console.log(Object.keys(field1.getChild('field2').getChildren()).length);
+                
         done();
       });
     });
 
-    it('should return the value of the field by the given row', (done) => {
-      wsPromise.then((ws) => {
-        const field1 = new Field(f1, null, ws, 3);
-        const field2 = field1.getChild('field1/field2/');
-        const field3 = field1.getChild('field1/field3/');
-        const field6 = field2.getChild('field1/field2/field6/');
-        const field8 = field3.getChild('field1/field3/field8/');
-        assert.equal(field1.valueAt(13), 'value');
-        assert.equal(field2.valueAt(13), 'value');
-        assert.equal(field6.valueAt(13), null);
-        assert.equal(field8.valueAt(11), 'value2');
-        assert.equal(field3.valueAt(11), null);
-        done();
-      });
-    });
+    // TO DELETE
+    // it('should return the value of the field by the given row', (done) => {
+    //   wsPromise.then(({ ws }) => {
+    //     const field1 = new Field(f1, null, ws, 3);
+    //     const field2 = field1.getChild('field1/field2/');
+    //     const field3 = field1.getChild('field1/field3/');
+    //     const field6 = field2.getChild('field1/field2/field6/');
+    //     const field8 = field3.getChild('field1/field3/field8/');
+    //     assert.equal(field1.valueAt(13), 'value');
+    //     assert.equal(field2.valueAt(13), 'value');
+    //     assert.equal(field6.valueAt(13), null);
+    //     assert.equal(field8.valueAt(11), 'value2');
+    //     assert.equal(field3.valueAt(11), null);
+    //     done();
+    //   });
+    // });
   });
 
   it('should throw AddressFormatException if invalid address provided on child addition', (done) => {
