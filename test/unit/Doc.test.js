@@ -250,7 +250,29 @@ describe('Doc', () => {
       .catch(console.log);
     });
 
-    /*it('should correctly merge document with plain rows', (done) => 
+    it ('should correctly merge document with top rows with another document with top rows', (done) => 
+    {
+      const doc1 = new Doc(doc1Path, undefined, 'C10:C27'),
+            doc2 = new Doc(doc2Path, undefined, 'C10:C21');
+      
+      doc1.constructObjects('D:U', 'C10', 'C11')
+      .then(() => doc2.constructObjects('D:U', 'C10', 'C11'))
+      .then(() => doc1.constructObjects('D:U', null, 'C11', 'C12'))      
+      .then(() => doc2.constructObjects('D:U', null, 'C11', 'C12'))      
+      .then(() => doc1.buildFieldSet('D6:U6', 3))
+      .then(() => doc2.buildFieldSet('D6:U6', 3))
+      .then(() => {
+        doc1.merge(doc2);
+        return doc2.save('H:/работа/xlutils/test/saved_top.xlsx');   
+      })
+      .then(() => {
+        console.log('saved');
+        done();
+      })
+      .catch(console.log);
+    });
+
+    it('should correctly merge document with plain rows', (done) => 
     {
       const doc1 = new Doc(doc1Path, undefined, 'C10:C27'),
             doc2 = new Doc(doc2Path, undefined, 'C10:C21');
@@ -271,6 +293,6 @@ describe('Doc', () => {
         done();
       })
       .catch(console.log);
-    });*/
+    });
   });
 });
