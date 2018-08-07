@@ -6,7 +6,7 @@ const assert = require('assert'),
 
 describe('Doc', () => {
   describe('Document creation', () => {
-    const doc1Path = 'H:/работа/xlutils/test/doc_diff_top1.xlsx',
+    const doc1Path = 'C:/Users/ShaytanovAI/Documents/work/xlutils/test/doc_diff_top1.xlsx',
           sheet = 'лист1';
     const doc1 = new Doc(doc1Path, undefined, 'C10:C27');
 
@@ -35,12 +35,12 @@ describe('Doc', () => {
   });
 
   describe('Document diff', () => {
-    const doc1Path = 'H:/работа/xlutils/test/doc_diff_top1.xlsx',
-          doc2Path = 'H:/работа/xlutils/test/doc_diff_top2.xlsx',
-          doc3Path = 'H:/работа/xlutils/test/doc_diff_mid1.xlsx',
-          doc4Path = 'H:/работа/xlutils/test/doc_diff_mid2.xlsx',
-          doc5Path = 'H:/работа/xlutils/test/doc_diff_plain1.xlsx',
-          doc6Path = 'H:/работа/xlutils/test/doc_diff_plain2.xlsx',
+    const doc1Path = 'C:/Users/ShaytanovAI/Documents/work/xlutils/test/doc_diff_top1.xlsx',
+          doc2Path = 'C:/Users/ShaytanovAI/Documents/work/xlutils/test/doc_diff_top2.xlsx',
+          doc3Path = 'C:/Users/ShaytanovAI/Documents/work/xlutils/test/doc_diff_mid1.xlsx',
+          doc4Path = 'C:/Users/ShaytanovAI/Documents/work/xlutils/test/doc_diff_mid2.xlsx',
+          doc5Path = 'C:/Users/ShaytanovAI/Documents/work/xlutils/test/doc_diff_plain1.xlsx',
+          doc6Path = 'C:/Users/ShaytanovAI/Documents/work/xlutils/test/doc_diff_plain2.xlsx',
           sheet = 'лист1';
 
     const doc1 = new Doc(doc1Path, undefined, 'C10:C27'),
@@ -117,9 +117,9 @@ describe('Doc', () => {
   });
 
   describe('Document fieldset creation', () => {
-    const doc1Path = 'H:/работа/xlutils/test/doc_fieldset_1.xlsx',
-          doc2Path = 'H:/работа/xlutils/test/doc_fieldset_2.xlsx',
-          doc3Path = 'H:/работа/xlutils/test/doc_fieldset_3.xlsx',
+    const doc1Path = 'C:/Users/ShaytanovAI/Documents/work/xlutils/test/doc_fieldset_1.xlsx',
+          doc2Path = 'C:/Users/ShaytanovAI/Documents/work/xlutils/test/doc_fieldset_2.xlsx',
+          doc3Path = 'C:/Users/ShaytanovAI/Documents/work/xlutils/test/doc_fieldset_3.xlsx',
           sheet = 'лист1';
 
     const doc1 = new Doc(doc1Path, undefined, 'C10:C27'),
@@ -150,8 +150,8 @@ describe('Doc', () => {
   });
 
   describe('Document merging', () => {
-    const doc1Path = 'H:/работа/xlutils/test/doc_fieldset_1.xlsx',
-          doc2Path = 'H:/работа/xlutils/test/doc_fieldset_2.xlsx',          
+    const doc1Path = 'C:/Users/ShaytanovAI/Documents/work/xlutils/test/doc_fieldset_1.xlsx',
+          doc2Path = 'C:/Users/ShaytanovAI/Documents/work/xlutils/test/doc_fieldset_2.xlsx',          
           sheet = 'лист1';
 
     const doc1 = new Doc(doc1Path, undefined, 'C10:C27'),
@@ -191,7 +191,7 @@ describe('Doc', () => {
   });
 
   // describe('Rows append', () => {
-  //   const doc1Path = 'H:/работа/xlutils/test/doc_fieldset_1.xlsx',
+  //   const doc1Path = 'C:/Users/ShaytanovAI/Documents/work/xlutils/test/doc_fieldset_1.xlsx',
   //         sheet = 'лист1';
 
   //   let doc1 = new Doc(doc1Path, sheet, 'C10:C27');
@@ -209,14 +209,14 @@ describe('Doc', () => {
   // });
 
   describe('Document saving', () => {
-    const doc1Path = 'H:/работа/xlutils/test/doc_fieldset_1.xlsx',
-          doc2Path = 'H:/работа/xlutils/test/doc_fieldset_2.xlsx',          
+    const doc1Path = 'C:/Users/ShaytanovAI/Documents/work/xlutils/test/doc_fieldset_1.xlsx',
+          doc2Path = 'C:/Users/ShaytanovAI/Documents/work/xlutils/test/doc_fieldset_2.xlsx',          
           sheet = 'лист1';    
 
     // it('should correctly save document', (done) => {
     //   const doc1 = new Doc(doc1Path, undefined, 'C10:C27');
     //   doc1.constructObjects('D:U', null, 'C11', 'C12')
-    //   .then(() => doc1.save('H:/работа/xlutils/test/saved.xlsx'))
+    //   .then(() => doc1.save('C:/Users/ShaytanovAI/Documents/work/xlutils/test/saved.xlsx'))
     //   .then(() => {
     //     console.log('saved');
     //     done();
@@ -241,7 +241,7 @@ describe('Doc', () => {
         assert.equal(doc2.getMidRows()['parent2_2'].getChildren()['obj4']._values[5].getValue(), 'merge_1');
         assert.equal(doc2.getMidRows()['parent2_1'].getChildren()['obj1']._values[21].getValue(), 'merge_4');
         console.log(doc2._ws.getCell('D14').value);
-        return doc2.save('H:/работа/xlutils/test/saved_mid.xlsx');        
+        return doc2.save('C:/Users/ShaytanovAI/Documents/work/xlutils/test/saved_mid.xlsx');        
       })
       .then(() => {
         console.log('saved');
@@ -263,7 +263,7 @@ describe('Doc', () => {
       .then(() => doc2.buildFieldSet('D6:U6', 3))
       .then(() => {
         doc1.merge(doc2);
-        return doc2.save('H:/работа/xlutils/test/saved_top.xlsx');   
+        return doc2.save('C:/Users/ShaytanovAI/Documents/work/xlutils/test/saved_top.xlsx');   
       })
       .then(() => {
         console.log('saved');
@@ -286,7 +286,7 @@ describe('Doc', () => {
         doc1.merge(doc2);
         assert.equal(doc2.getPlainRows()['obj4'].row._values[5].getValue(), 'merge_1');
         assert.equal(doc2.getPlainRows()['obj1'].row._values[21].getValue(), 'merge_4');
-        return doc2.save('H:/работа/xlutils/test/saved_plain.xlsx');        
+        return doc2.save('C:/Users/ShaytanovAI/Documents/work/xlutils/test/saved_plain.xlsx');        
       })
       .then(() => {
         console.log('saved');

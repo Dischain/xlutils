@@ -7,7 +7,7 @@ const assert = require('assert'),
       readFile = require('../../lib/utils/xl').readFile;
 
 describe('DocObject', () => {
-  const wsPromise = readFile('H:/работа/xlutils/test/doc_obj_test.xlsx');
+  const wsPromise = readFile('C:/Users/ShaytanovAI/Documents/work/xlutils/test/doc_obj_test.xlsx');
 
   it('should correctly construct document object', (done) => {
     wsPromise.then((res) => {

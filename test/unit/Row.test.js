@@ -10,7 +10,7 @@ const assert = require('assert'),
       AddressFormatException = require('../../lib/exceptions/AddressFormatException');
 
 describe('Row', () => {
-  const wsPromise = readFile('H:/работа/xlutils/test/row_test.xlsx');
+  const wsPromise = readFile('C:/Users/ShaytanovAI/Documents/work/xlutils/test/row_test.xlsx');
 
   it('should correctly construct row', (done) => {
     wsPromise.then(({ ws }) => {

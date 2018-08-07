@@ -135,7 +135,7 @@ describe('Field', () => {
   });
 
   describe('Subfield construction', () => {
-    const wsPromise = readFile('H:/работа/xlutils/test/field_test.xlsx');
+    const wsPromise = readFile('C:/Users/ShaytanovAI/Documents/work/xlutils/test/field_test.xlsx');
     const f1 = 'D6', f2 = 'L6', f3 = 'L12';
 
     it ('should correctly construct field with subfields', (done) => {
