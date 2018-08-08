@@ -44,29 +44,26 @@ const doc1 = new Doc(doc1Path, sheet, 'E15:E264'),
 /**
  * Формирование документа с ответственными исполнителями
  */
-doc1.constructObjects('F:S', 'E15', 'E16')
-    .then(() => doc1.constructObjects('F:S', null, 'E16', 'E17'))
-    .then(() => {
-      for (let a in doc1.getMidRows()) {
-        console.log('Отв. исп.:' + a);
-        console.log(doc1.getTopRows()[a].getChildrenRange().getAddress().toString());
-        for (let b in doc1.getTopRows()[a].getChildren()) {
-          console.log('Объект: ' + b);
-          // console.log(doc1.getTopRows()[a].getChildren()[b])
-        }
-      }
-    })
-.catch(console.log);
-
-// doc2.constructObjects('D:CM', 'C15', 'C16')
-//     .then(() => doc2.constructObjects('D:CM', null, 'C16', 'C17'))
+// doc1.constructObjects('F:S', null, 'E16', 'E17')
 //     .then(() => {
-//       for (let a in doc2.getTopRows()) {
-//         console.log('Дирекция:' + a);
-//         console.log(doc2.getTopRows()[a].getChildrenRange().getAddress().toString());
-//         for (let b in doc2.getTopRows()[a].getChildren()) {
-//           console.log('Отв. исп.: ' + b);
-//           // console.log(doc2.getTopRows()[a].getChildren()[b])
+//       for (let a in doc1.getMidRows()) {
+//         console.log('Отв. исп.:' + a);
+//         console.log(doc1.getMidRows()[a].getChildrenRange().getAddress().toString());
+//         for (let b in doc1.getMidRows()[a].getChildren()) {
+//           console.log('Объект: ' + b);
+//           // console.log(doc1.getMidRows()[a].getChildren()[b])
+//         }
+//       }
+//     })
+// .catch(console.log);
+// doc2.constructObjects('F:S', null, 'E16', 'E17')
+//     .then(() => {
+//       for (let a in doc2.getMidRows()) {
+//         console.log('Отв. исп.:' + a);
+//         console.log(doc2.getMidRows()[a].getChildrenRange().getAddress().toString());
+//         for (let b in doc2.getMidRows()[a].getChildren()) {
+//           console.log('Объект: ' + b);
+//           // console.log(doc2.getMidRows()[a].getChildren()[b])
 //         }
 //       }
 //     })
