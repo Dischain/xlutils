@@ -54,7 +54,7 @@ describe('Cell', () => {
   });
 
   it('should return inner cell value', (done) => {
-    assert.equal(cell.getValue(), null);
+    assert.equal(cell.getValue(), '');
     done();
   });
 
