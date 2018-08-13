@@ -120,4 +120,12 @@ describe('REUtils', () => {
     assert.equal(REUtils.fillColRangeWithRows('A:PP', 2), 'A2:PP2');
     done();
   });
+
+  it('should return true if the given range contains specified address', (done) => {
+    assert.equal(REUtils.rangeContainsAddr('A1:F10', 'C7'), true);
+    assert.equal(REUtils.rangeContainsAddr('F10:A1', 'C7'), true);
+    assert.equal(REUtils.rangeContainsAddr('A1:F10', 'A17'), false);
+    assert.equal(REUtils.rangeContainsAddr('A1:F10', 'G7'), true);
+    done();
+  });
 });
