@@ -24,13 +24,35 @@ to1.constructObjects('AC:CQ', 'C15', 'C16')
 .then(() => from1.buildFieldSet('AC8:CQ8', 3))
 .then(() => {
   from1.merge(to1);
-  console.log(from1._ws.getCell('BM21').value);
-  console.log(from1._ws.getCell('BY24').value);
-  console.log(to1._ws.getCell('BM21').value);
-  console.log(to1._ws.getCell('BY24').value);
+
+  // console.log(from1._ws.getCell('BM21').value);
+  // console.log(from1._ws.getCell('BY24').value);
+  // console.log(to1._ws.getCell('BM21').value);
+  // console.log(to1._ws.getCell('BY24').value);
   return to1.save('C:/Users/ShaytanovAI/Documents/saved.xlsx');
 })
 .then(() => {
   console.log('saved');
 })
 .catch(console.log);
+
+// from1.constructObjects('AC:CQ', 'C15', 'C16')
+// .then(() => to1.constructObjects('AC:CQ', 'C15', 'C16'))
+// .then(() => {
+//   return Object.keys(from1.getTopRows()).reduce((acc, curTopObjName) => {
+//     const curFromTopObj = from1.getTopRows()[curTopObjName],
+//           curToTopObj = to1.getTopRows()[curTopObjName];
+
+//     const curFrom1 = new Doc(from1Path, sheet, curFromTopObj.getChildrenRange()),
+//           curTo1 = new Doc(to1Path, sheet, curToTopObj.getChildrenRange());
+    
+//     return acc
+//       .then(() => curFrom1.constructObjects('AC:CQ', null, 'C16', 'C17')
+//       .then(() => curTo1.constructObjects('AC:CQ', null, 'C16', 'C17'))    
+//       .then(() => curFrom1.buildFieldSet('AC8:CQ8', 3))
+//       .then(() => curTo1.buildFieldSet('AC8:CQ8', 3))
+//       .then(() => curFrom1.merge(curTo1)))
+//       .then(() => curTo1.save('C:/Users/ShaytanovAI/Documents/saved.xlsx'));
+//   }, Promise.resolve())
+// })
+// .catch(console.log);
