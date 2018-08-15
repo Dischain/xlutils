@@ -15,7 +15,7 @@ Sub copyRowWithFormulas(first, last, ws)
   regEx.Global = True
 
   ws.Range(first, last).Copy
-  ws.Range(first, last).Offset(1).Insert  
+  ws.Range(first, last).Offset(1).Insert
 
   For Each c In ws.Range(first, last).Offset(1, 0)
     If Not regEx.Test(c.Formula) Then
@@ -24,12 +24,12 @@ Sub copyRowWithFormulas(first, last, ws)
   Next
 End Sub
 
-Public Sub main(path, sheet, rowIndex, collumn, value, collsRange)
-  WScript.Stdout.WriteLine "path: " & path
+Public Sub main(path, sheet, rowIndex, collumn, value, collsRange)    
   WScript.Stdout.WriteLine "sheet: " & sheet
+  WScript.Stdout.WriteLine "path: " & path  
   
   Set objExcel = CreateObject("Excel.Application") 
-  
+  WScript.Stdout.WriteLine "here"
   Set wb = objExcel.Workbooks.Open(path, True, False)
   Set ws = wb.Worksheets(sheet)
   
@@ -39,7 +39,6 @@ Public Sub main(path, sheet, rowIndex, collumn, value, collsRange)
   wb.Close
   objExcel.Quit
 End Sub
-
 
 If WScript.Arguments.Count <= 5 Then
   WScript.Stdout.WriteLine "Invalid number of arguments"
