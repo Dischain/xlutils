@@ -2,8 +2,10 @@ Public Function appendRow(r, value, valueColl, collsRange, ws)
   Dim splittedAddr : splittedAddr = Split(collsRange, ":")
   Dim first : first = splittedAddr(0)
   Dim last : last = splittedAddr(1)
-  copyRowWithFormulas first & r, last & r, ws
-  ws.Range(valueColl & r + 1).value = value
+  
+  ' copyRowWithFormulas first & r, last & r, ws
+  ' ws.Range(valueColl & r + 1).value = value
+  ws.Range((first)).Offset(1).EntireRow.Insert(xlShiftDown)
 End Function
 
 Sub copyRowWithFormulas(first, last, ws)
@@ -13,8 +15,9 @@ Sub copyRowWithFormulas(first, last, ws)
   regEx.Pattern = strPattern
   regEx.IgnoreCase = True
   regEx.Global = True
-
+  
   ws.Range(first, last).Copy
+  WScript.Stdout.WriteLine "here"
   ws.Range(first, last).Offset(1).Insert
 
   For Each c In ws.Range(first, last).Offset(1, 0)
@@ -29,10 +32,10 @@ Public Sub main(path, sheet, rowIndex, collumn, value, collsRange)
   WScript.Stdout.WriteLine "path: " & path  
   
   Set objExcel = CreateObject("Excel.Application") 
-  WScript.Stdout.WriteLine "here"
+  
   Set wb = objExcel.Workbooks.Open(path, True, False)
   Set ws = wb.Worksheets(sheet)
-  
+    
   i = appendRow((rowIndex), (value), (collumn), (collsRange), ws)
 
   wb.Save

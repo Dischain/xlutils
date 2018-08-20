@@ -56,25 +56,25 @@ const Doc = require('./lib/objects/Doc');
 /*************************************************************************************
  * Слияние документов по объектам
  ************************************************************************************/
-// const to3Path   = 'C:/Users/ShaytanovAI/Downloads/Информация_по_заключенным_договорам ТЗ_16.05.18.xlsx', 
-//       from3Path = 'C:/Users/ShaytanovAI/Downloads/Сводная форма на 01.05.2018 — копия.xlsx',
-//       sheet = undefined;
+const to3Path   = 'C:/Users/ShaytanovAI/Downloads/Информация_по_заключенным_договорам ТЗ_16.05.18.xlsx', 
+      from3Path = 'C:/Users/ShaytanovAI/Downloads/Сводная форма на 01.05.2018 — копия.xlsx',
+      sheet = undefined;
       
-// const to3 = new Doc(to3Path, sheet, 'C17:C230'),
-//       from3 = new Doc(from3Path, sheet, 'C17:C208');
+const to3 = new Doc(to3Path, sheet, 'C17:C230'),
+      from3 = new Doc(from3Path, sheet, 'C17:C208');
 
-// from3.constructObjects('F:BP')
-// .then(() => to3.constructObjects('AC:CQ'))
-// .then(() => from3.buildFieldSet('F8:BP8', 3))
-// .then(() => to3.buildFieldSet('AC8:CQ8', 3))
-// .then(() => {
-//   from3.merge(to3);
-//   return to3.save('C:/Users/ShaytanovAI/Documents/saved3.xlsx');
-// })
-// .then(() => {
-//   console.log('saved');
-// })
-// .catch(console.log);
+from3.constructObjects('F:BP')
+.then(() => to3.constructObjects('AC:CQ'))
+.then(() => from3.buildFieldSet('F8:BP8', 3))
+.then(() => to3.buildFieldSet('AC8:CQ8', 3))
+.then(() => {
+  from3.merge(to3);
+  return to3.save('C:/Users/ShaytanovAI/Documents/saved3.xlsx');
+})
+.then(() => {
+  console.log('saved');
+})
+.catch(console.log);
 
 // from1.constructObjects('AC:CQ', 'C15', 'C16')
 // .then(() => to1.constructObjects('AC:CQ', 'C15', 'C16'))
