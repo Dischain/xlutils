@@ -8,7 +8,7 @@ const assert = require('assert'),
       AddressFormatException = require('../../lib/exceptions/AddressFormatException');
 
 describe('Range', () => {
-  const ws = createWS('test');
+  const { ws } = createWS('test');
   let range;
 
   beforeEach((done) => {

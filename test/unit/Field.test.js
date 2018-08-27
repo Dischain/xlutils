@@ -10,7 +10,7 @@ const assert = require('assert'),
       EmptyFieldException = require('../../lib/exceptions/EmptyFieldException');
 
 describe('Field', () => {
-  const ws = createWS('test');
+  const { ws } = createWS('test');
   const fieldAddress = 'B2', childAddress = 'B3';
   let field;
   
