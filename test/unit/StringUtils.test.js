@@ -29,4 +29,13 @@ describe('SringUtils', () => {
     assert.equal(StringUtils.constructPath(undefined, 'child'), 'child/');
     done();
   });
+
+  it('should return true if the given string contains one of specfied array item', (done) => {
+    assert.equal(StringUtils.containsArrItem('Министерство чегото там', ['Министерство', 'комитет', 'служба', 'управление']), true);
+    assert.equal(StringUtils.containsArrItem('комитет чегото там', ['министерство', 'комитет', 'служба', 'управление']), true);
+    assert.equal(StringUtils.containsArrItem('управление чегото там', ['министерство', 'комитет', 'служба', 'управление']), true);
+    assert.equal(StringUtils.containsArrItem('дирекция чегото там', ['министерство', 'комитет', 'служба', 'управление']), false);
+    assert.equal(StringUtils.containsArrItem('дирекция чегото там', ['дирекция', 'комитет', 'служба', 'управление']), true);
+    done();
+  });
 });
