@@ -5,20 +5,23 @@ const assert = require('assert'),
       readFile = require('../../lib/utils/xl').readFile;
 
 describe('Doc', () => {
+  const topSigns = ['parent1_1', 'parent1_2'],
+        midSigns = ['parent2_1', 'parent2_2', 'parent2_3', 'parent2_4'];
+
   describe('Document creation', () => {
     const doc1Path = 'C:/Users/ShaytanovAI/Documents/work/xlutils/test/doc_diff_top1.xlsx',
           sheet = 'лист1';
     const doc1 = new Doc(doc1Path, undefined, 'C10:C27');
 
     it('should correct construct document with plain rows', (done) => {            
-      doc1.constructObjects('D:I').then(() => {
+      doc1.constructObjects('plain', 'D:I').then(() => {
         assert.equal(doc1._plainRows['obj5'].row.getValueByColIndex(5), 'val5_12');
         done();
       }).catch(console.log);
     });
 
     it('should construct document with top objects and with children', (done) => {
-      doc1.constructObjects('D:I', 'C10', 'C11').then(() => {
+      doc1.constructObjects('top', 'D:I', topSigns, midSigns).then(() => {
         assert.equal(doc1._topRows['parent1_2'].getChildren()['parent2_3'].getName(), 'parent2_3');
         assert.equal(doc1._topRows['parent1_2'].getChildren()['parent2_4'].getName(), 'parent2_4');
         done();
@@ -26,7 +29,7 @@ describe('Doc', () => {
     });
 
     it('should construct document with mid objects and with children', (done) => {
-      doc1.constructObjects('D:I', null, 'C11', 'C12').then(() => {
+      doc1.constructObjects('mid', 'D:I', topSigns, midSigns, 'empty').then(() => {
         assert.equal(doc1._midRows['parent2_1'].getChildren()['obj2'].getName(), 'obj2');
         assert.equal(doc1._midRows['parent2_2'].getChildren()['obj5'].getName(), 'obj5');
         done();
@@ -51,10 +54,10 @@ describe('Doc', () => {
           doc6 = new Doc(doc6Path, undefined, 'C10:C18');
 
     it('should return difference between two documents with top and mid objects', (done) => {
-      doc1.constructObjects('D:I', 'C10', 'C11')
-      .then(() => doc2.constructObjects('D:I', 'C10', 'C11'))
-      .then(() => doc1.constructObjects('D:I', null, 'C11', 'C12'))
-      .then(() => doc2.constructObjects('D:I', null, 'C11', 'C12'))
+      doc1.constructObjects('top', 'D:I', topSigns, midSigns)
+      .then(() => doc2.constructObjects('top', 'D:I', topSigns, midSigns))
+      .then(() => doc1.constructObjects('mid', 'D:I', topSigns, midSigns, 'empty'))
+      .then(() => doc2.constructObjects('mid', 'D:I', topSigns, midSigns, 'empty'))
       .then(() => {
         const diff = doc1.diff(doc2);
 
@@ -69,8 +72,8 @@ describe('Doc', () => {
     });
 
     it('should return difference between two documents with mid objects', (done) => {
-      doc3.constructObjects('D:I', null, 'C10', 'empty')
-      .then(() => doc4.constructObjects('D:I', null, 'C10', 'empty'))
+      doc3.constructObjects('mid', 'D:I', topSigns, midSigns, 'empty')
+      .then(() => doc4.constructObjects('mid', 'D:I', topSigns, midSigns, 'empty'))
       .then(() => {
         const diff = doc3.diff(doc4);
 
@@ -85,9 +88,9 @@ describe('Doc', () => {
     });
 
     it('should return difference between top document and mid document', (done) => {
-      doc1.constructObjects('D:I', 'C10', 'C11')
-      .then(() => doc1.constructObjects('D:I', null, 'C11', 'C12'))
-      .then(() => doc4.constructObjects('D:I', null, 'C10', 'empty'))
+      doc1.constructObjects('top', 'D:I', topSigns, midSigns)
+      .then(() => doc1.constructObjects('mid', 'D:I', topSigns, midSigns, 'empty'))
+      .then(() => doc4.constructObjects('mid', 'D:I', topSigns, midSigns, 'empty'))
       .then(() => {        
         const diff = doc1.diff(doc4);
 
@@ -102,8 +105,8 @@ describe('Doc', () => {
     });
 
     it('should return difference between two documents with plain rows', (done) => {            
-      doc5.constructObjects('D:I')
-      .then(() => doc6.constructObjects('D:I'))
+      doc5.constructObjects('plain', 'D:I')
+      .then(() => doc6.constructObjects('plain', 'D:I'))
       .then(() => {
         const diff = doc5.diff(doc6);
         
@@ -159,8 +162,8 @@ describe('Doc', () => {
 
     it('should correctly merge document with plain rows', (done) => 
     {
-      doc1.constructObjects('D:U')
-      .then(() => doc2.constructObjects('D:U'))
+      doc1.constructObjects('plain', 'D:U')
+      .then(() => doc2.constructObjects('plain', 'D:U'))
       .then(() => doc1.buildFieldSet('D6:U6', 3))
       .then(() => doc2.buildFieldSet('D6:U6', 3))
       .then(() => {
@@ -175,9 +178,9 @@ describe('Doc', () => {
     it('should correctly merge document with top and mid objects with doc which contains '
        + 'mid objects only', (done) => 
     {
-      doc1.constructObjects('D:U', 'C10', 'C11')
-      .then(() => doc2.constructObjects('D:U', null, 'C11', 'C12'))
-      .then(() => doc1.constructObjects('D:U', null, 'C11', 'C12'))
+      doc1.constructObjects('top', 'D:U', topSigns, midSigns)
+      .then(() => doc2.constructObjects('mid', 'D:U', topSigns, midSigns, 'empty'))
+      .then(() => doc1.constructObjects('mid', 'D:U', topSigns, midSigns, 'empty'))
       .then(() => doc1.buildFieldSet('D6:U6', 3))
       .then(() => doc2.buildFieldSet('D6:U6', 3))
       .then(() => {
@@ -190,39 +193,10 @@ describe('Doc', () => {
     });    
   });
 
-  // describe('Rows append', () => {
-  //   const doc1Path = 'C:/Users/ShaytanovAI/Documents/work/xlutils/test/doc_fieldset_1.xlsx',
-  //         sheet = 'лист1';
-
-  //   let doc1 = new Doc(doc1Path, sheet, 'C10:C27');
-
-  //   it('should correctly append row', (done) => {
-  //     doc1.appendRow(17, 'C', 'C:U', 'heyho!');
-  //     doc1 = new Doc(doc1Path, undefined/*sheet*/, 'C10:C27');
-  //     // done();
-  //     doc1.constructObjects('D:U')
-  //     .then(() => {
-  //       assert.equal(doc1.getPlainRows()['heyho!'].row._values[5].getValue(), 'val5_12');
-  //       done();
-  //     }).catch(console.log);
-  //   });
-  // });
-
   describe('Document saving', () => {
     const doc1Path = 'C:/Users/ShaytanovAI/Documents/work/xlutils/test/doc_fieldset_1.xlsx',
           doc2Path = 'C:/Users/ShaytanovAI/Documents/work/xlutils/test/doc_fieldset_2.xlsx',          
           sheet = 'лист1';    
-
-    // it('should correctly save document', (done) => {
-    //   const doc1 = new Doc(doc1Path, undefined, 'C10:C27');
-    //   doc1.constructObjects('D:U', null, 'C11', 'C12')
-    //   .then(() => doc1.save('C:/Users/ShaytanovAI/Documents/work/xlutils/test/saved.xlsx'))
-    //   .then(() => {
-    //     console.log('saved');
-    //     done();
-    //   })
-    //   .catch(console.log);
-    // });
 
     it('should correctly save document after merging document with top and '
       + 'mid objects with doc which contains mid objects only', (done) => 
@@ -230,9 +204,9 @@ describe('Doc', () => {
       const doc1 = new Doc(doc1Path, undefined, 'C10:C27'),
             doc2 = new Doc(doc2Path, undefined, 'C10:C21');
 
-      doc1.constructObjects('D:U', 'C10', 'C11')
-      .then(() => doc2.constructObjects('D:U', null, 'C11', 'C12'))
-      .then(() => doc1.constructObjects('D:U', null, 'C11', 'C12'))
+      doc1.constructObjects('top', 'D:U', topSigns, midSigns)
+      .then(() => doc2.constructObjects('mid', 'D:U', topSigns, midSigns, 'empty'))
+      .then(() => doc1.constructObjects('mid', 'D:U', topSigns, midSigns, 'empty'))
       .then(() => doc1.buildFieldSet('D6:U6', 3))
       .then(() => doc2.buildFieldSet('D6:U6', 3))
       .then(() => {
@@ -255,10 +229,10 @@ describe('Doc', () => {
       const doc1 = new Doc(doc1Path, undefined, 'C10:C27'),
             doc2 = new Doc(doc2Path, undefined, 'C10:C21');
       
-      doc1.constructObjects('D:U', 'C10', 'C11')
-      .then(() => doc2.constructObjects('D:U', 'C10', 'C11'))
-      .then(() => doc1.constructObjects('D:U', null, 'C11', 'C12'))      
-      .then(() => doc2.constructObjects('D:U', null, 'C11', 'C12'))      
+      doc1.constructObjects('top', 'D:U', topSigns, midSigns)
+      .then(() => doc2.constructObjects('top', 'D:U', topSigns, midSigns))
+      .then(() => doc1.constructObjects('mid', 'D:U', topSigns, midSigns, 'empty'))      
+      .then(() => doc2.constructObjects('mid', 'D:U', topSigns, midSigns, 'empty'))      
       .then(() => doc1.buildFieldSet('D6:U6', 3))
       .then(() => doc2.buildFieldSet('D6:U6', 3))
       .then(() => {
@@ -277,8 +251,8 @@ describe('Doc', () => {
       const doc1 = new Doc(doc1Path, undefined, 'C10:C27'),
             doc2 = new Doc(doc2Path, undefined, 'C10:C21');
 
-      doc1.constructObjects('D:U')
-      .then(() => doc2.constructObjects('D:U'))
+      doc1.constructObjects('plain', 'D:U')
+      .then(() => doc2.constructObjects('plain', 'D:U'))
       .then(() => doc1.buildFieldSet('D6:U6', 3))
       .then(() => doc2.buildFieldSet('D6:U6', 3))
       .then(() => {
@@ -295,4 +269,22 @@ describe('Doc', () => {
       .catch(console.log);
     });
   });
+
+  // describe('Rows append', () => {
+  //   const doc1Path = 'C:/Users/ShaytanovAI/Documents/work/xlutils/test/doc_fieldset_1.xlsx',
+  //         sheet = 'лист1';
+
+  //   let doc1 = new Doc(doc1Path, sheet, 'C10:C27');
+
+  //   it('should correctly append row', (done) => {
+  //     doc1.appendRow(17, 'C', 'C:U', 'heyho!');
+  //     doc1 = new Doc(doc1Path, undefined/*sheet*/, 'C10:C27');
+  //     // done();
+  //     doc1.constructObjects('D:U')
+  //     .then(() => {
+  //       assert.equal(doc1.getPlainRows()['heyho!'].row._values[5].getValue(), 'val5_12');
+  //       done();
+  //     }).catch(console.log);
+  //   });
+  // });
 });
