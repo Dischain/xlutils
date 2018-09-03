@@ -45,7 +45,7 @@ doc1.constructObjects('top', 'F:P', topSigns, midSigns)
           if (curRow.getValueByColIndex(8) == 'Служба Капитального Строительства') {
             pirSKS.push(1);
           }
-        }
+        } 
 
         if (curRow.getValueByColIndex(9) == 'Конкурс ПИР') {
           concursPir.push(1);
@@ -68,13 +68,15 @@ doc1.constructObjects('top', 'F:P', topSigns, midSigns)
     console.log('ПИР: ' + pir.length);
     console.log('Конкурс ПИР: ' + concursPir.length);
     console.log('СМР не ведутся: ' + smrStopped.length);
-
+    console.log('Итого: ' + (smr.length + concursSmr.length + pir.length + concursPir.length + smrStopped.length));
+    
     console.log('---->СКС');
     console.log('СМР: ' + smrSKS.length);
     console.log('Конкурс СМР: ' + concursSmrSKS.length);
     console.log('ПИР: ' + pirSKS.length);
     console.log('Конкурс ПИР: ' + concursPirSKS.length);
     console.log('СМР не ведутся: ' + smrStoppedSKS.length);
+    console.log('Итого: ' + (smrSKS.length + concursSmrSKS.length + pirSKS.length + concursPirSKS.length + smrStoppedSKS.length));
   }
 })
 .catch(console.log);

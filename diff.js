@@ -2,10 +2,10 @@
 
 const Doc = require('./lib/objects/Doc');
 
-const doc1Path = 'C:/Users/ShaytanovAI/Downloads/Сводная форма по ГРБС на 02.08.2018_ЭКСПЕРИМЕНТ.XLSX',
-      doc2Path = 'C:/Users/ShaytanovAI/Downloads/Информация_по_заключенным_договорам ТЗ_16.05.18.xlsx',
-      doc3Path = 'C:/Users/ShaytanovAI/Downloads/Сводная форма на 01.05.2018.xlsx',
-      sheet = undefined;
+// const doc1Path = 'C:/Users/ShaytanovAI/Downloads/Сводная форма по ГРБС на 02.08.2018_ЭКСПЕРИМЕНТ.XLSX',
+//       doc2Path = 'C:/Users/ShaytanovAI/Downloads/Информация_по_заключенным_договорам ТЗ_16.05.18.xlsx',
+//       doc3Path = 'C:/Users/ShaytanovAI/Downloads/Сводная форма на 01.05.2018.xlsx',
+//       sheet = undefined;
 
 // let doc1 = new Doc(doc1Path, sheet, 'E15:E264'),
 //     doc2 = new Doc(doc2Path, sheet, 'C15:C230'),
@@ -54,39 +54,39 @@ const doc1Path = 'C:/Users/ShaytanovAI/Downloads/Сводная форма по 
 /*****************************************/
 /* + заливка в этот файл данных          */
 /*****************************************/
-const diff1Path = 'C:/Users/ShaytanovAI/Documents/diff1saved.xlsx';
-let doc1 = new Doc(doc1Path, sheet, 'E15:E264'),
-    diff1Doc = new Doc(diff1Path, sheet, 'E14:E214');
+// const diff1Path = 'C:/Users/ShaytanovAI/Documents/diff1saved.xlsx';
+// let doc1 = new Doc(doc1Path, sheet, 'E15:E264'),
+//     diff1Doc = new Doc(diff1Path, sheet, 'E14:E214');
 
-diff1Doc.constructObjects('F:P')
-// Повторное построение исходного документа
-.then(() => doc1.constructObjects('F:P'))
-.then(() => {
-  console.log('diffdoc plain rows:');
-  for (let a in diff1Doc.getPlainRows()) { console.log(a); }
-  return Promise.resolve();
-})
-// Построить поля
-.then(() => doc1.buildFieldSet('F6:P6', 1))
-.then(() => diff1Doc.buildFieldSet('F6:P6', 1))
-.then(() => {
-  const diff = diff1Doc.diff(doc1);
-  // const diff = diff1Doc.diff(doc1);
-  for (let a in diff) {
-    console.log('Дирекция: ' + a);
-    for (let b in diff[a]) {
-      console.log('Отв. исп.: ' + b);
-      for (let c in diff[a][b]) {
-        console.log('Объект: ' + c);
-      }
-    }
-  }
-  // Слить
-  doc1.merge(diff1Doc);
-  // Сохранить
-  return diff1Doc.save('C:/Users/ShaytanovAI/Documents/diff1saved.xlsx')
-})
-.catch(console.log);
+// diff1Doc.constructObjects('F:P')
+// // Повторное построение исходного документа
+// .then(() => doc1.constructObjects('F:P'))
+// .then(() => {
+//   console.log('diffdoc plain rows:');
+//   for (let a in diff1Doc.getPlainRows()) { console.log(a); }
+//   return Promise.resolve();
+// })
+// // Построить поля
+// .then(() => doc1.buildFieldSet('F6:P6', 1))
+// .then(() => diff1Doc.buildFieldSet('F6:P6', 1))
+// .then(() => {
+//   const diff = diff1Doc.diff(doc1);
+//   // const diff = diff1Doc.diff(doc1);
+//   for (let a in diff) {
+//     console.log('Дирекция: ' + a);
+//     for (let b in diff[a]) {
+//       console.log('Отв. исп.: ' + b);
+//       for (let c in diff[a][b]) {
+//         console.log('Объект: ' + c);
+//       }
+//     }
+//   }
+//   // Слить
+//   doc1.merge(diff1Doc);
+//   // Сохранить
+//   return diff1Doc.save('C:/Users/ShaytanovAI/Documents/diff1saved.xlsx')
+// })
+// .catch(console.log);
 
 /**************************************************************************************
 * Определение разницы по двум документам с учетом дирекций и 
@@ -174,8 +174,8 @@ diff1Doc.constructObjects('F:P')
 // const fromPR = new Doc(fromPRPath, 'UserView', 'B2:B137'),
 //       toPR = new Doc(toPRPath, 'UserView', 'A2:A121');
 
-// fromPR.constructObjects('B:F')
-// .then(() => toPR.constructObjects('C:G'))
+// fromPR.constructObjects('plain', 'B:F')
+// .then(() => toPR.constructObjects('plain', 'C:G'))
 // .then(() => {
 //   const diff = fromPR.diff(toPR);
 //   console.log(Object.keys(diff).length);
@@ -183,3 +183,23 @@ diff1Doc.constructObjects('F:P')
 // })
 // .catch(console.log);
 
+const doc2Path = 'C:/Users/ShaytanovAI/Downloads/Информация_по_заключенным_договорам ТЗ_16.05.18.xlsx',
+      doc3Path = 'C:/Users/ShaytanovAI/Downloads/Сводная форма на 01.05.2018.xlsx';
+
+const doc2 = new Doc(doc2Path, undefined, 'C15:C230'),
+      doc3 = new Doc(doc3Path, undefined, 'C16:C211');
+
+let topSigns = ['Дирекция'],
+    midSigns = ['Министерство', 'Служба', 'Государственный комитет', 'Управление', 'Администрация'];
+
+doc3.constructObjects('mid', 'F:BP', topSigns, midSigns, 'empty')
+.then(() => doc2.constructObjects('top', 'AC:CM', topSigns, midSigns))
+.then(() => doc2.constructObjects('mid', 'AC:CM', topSigns, midSigns, 'empty'))
+.then(() => {
+  const diff = doc3.diff(doc2);
+  for (let a in diff) { 
+    console.log(a); 
+    for (let b in diff[a]) { console.log('  ' + b); }
+  }
+})
+.catch(console.log);
