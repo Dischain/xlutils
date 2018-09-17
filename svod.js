@@ -53,7 +53,7 @@ doc1.constructObjects('top', 'F:P', topSigns, midSigns)
             concursPirSKS.push(1);
           }
         }
-
+        
         if (curRow.getValueByColIndex(9) == 'СМР не ведутся') {
           smrStopped.push(1);
           if (curRow.getValueByColIndex(8) == 'Служба Капитального Строительства') {

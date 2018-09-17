@@ -75,19 +75,18 @@ from.constructObjects('plain', 'G:J')
   for (let a in from.getPlainRows()) {
     let curRow = from.getPlainRows()[a];
 
+    console.log(curRow.row.getName());
+
     if (curRow.row.getValueByColIndex(7) == 'ДСОСС' && 
-        (curRow.row.getValueByColIndex(9) == 'СМР' || 
+        (curRow.row.getValueByColIndex(9) == 'конкурс СМР' || 
+        curRow.row.getValueByColIndex(9) == 'СМР' || 
         curRow.row.getValueByColIndex(9) == 'СМР не ведутся'))
     {
       objsOfInterest[curRow.row.getName()] = curRow;
+      console.log('added: ' + curRow.row.getName());
     }
   }
-
-  console.log('-------');
-  for (let a in to.getPlainRows()) {
-    console.log(a);
-  }
-  console.log('-------');
+  console.log(Object.keys(objsOfInterest).length);
 
   for (let a in objsOfInterest) {
     if (to.getPlainRows()[a] == undefined) { 
